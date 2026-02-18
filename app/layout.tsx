@@ -8,7 +8,7 @@ const spaceGrotesk = Space_Grotesk({ subsets: ["latin"] });
 const jetBrainsMono = JetBrains_Mono({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: 'Luna X | Ethical Hacker AI',
+  title: 'The Luna X ',
   description: 'Luna X - Your AI-powered ethical hacking assistant. Advanced security analysis, vulnerability detection, and penetration testing intelligence.',
   generator: 'v0.app',
   icons: {
