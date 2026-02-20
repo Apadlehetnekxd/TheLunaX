@@ -19,15 +19,15 @@ export const metadata: Metadata = {
         media: '(prefers-color-scheme: light)',
       },
       {
-        url: '',
+        url: 'image.png',
         media: '(prefers-color-scheme: dark)',
       },
       {
-        url: '',
+        url: 'image.png',
         type: 'image/svg+xml',
       },
     ],
-    apple: '',
+    apple: 'image.png',
   },
 }
 
