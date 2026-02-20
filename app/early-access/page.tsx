@@ -6,6 +6,8 @@ import MatrixRain from "@/components/MatrixRain" // Import MatrixRain component
 import { useState, useEffect, useRef } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import Link from "next/link"
+import LanguageSelector from "@/components/LanguageSelector"
+import { useLanguage } from "@/lib/language-context"
 
 
 
@@ -17,6 +19,7 @@ export default function EarlyAccessPage() {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [isSubmitted, setIsSubmitted] = useState(false)
   const [queuePosition, setQueuePosition] = useState(0)
+  const { t } = useLanguage()
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -41,10 +44,11 @@ export default function EarlyAccessPage() {
           <Link href="/" className="font-bold text-2xl tracking-tighter hover:opacity-70 transition-opacity">
             LUNA<span className="text-muted-foreground">X</span>
           </Link>
-          <nav className="flex items-center gap-6">
+          <nav className="flex items-center gap-4">
             <Link href="/scan" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
-              Try Scanner
+              {t("ea.navTryScanner")}
             </Link>
+            <LanguageSelector />
           </nav>
         </div>
       </header>
@@ -72,11 +76,10 @@ export default function EarlyAccessPage() {
                     </svg>
                   </motion.div>
                   <h1 className="text-4xl md:text-5xl font-bold mb-4">
-                    Get <span className="text-muted-foreground">Early</span> Access
+                    {t("ea.title")} <span className="text-muted-foreground">{t("ea.titleAccent")}</span> {t("ea.titleEnd")}
                   </h1>
                   <p className="text-muted-foreground max-w-md mx-auto">
-                    Join the waitlist to be among the first to experience Luna X. 
-                    Limited spots available for beta testers.
+                    {t("ea.description")}
                   </p>
                 </div>
 
@@ -87,13 +90,13 @@ export default function EarlyAccessPage() {
                     transition={{ delay: 0.1 }}
                   >
                     <label className="block text-sm font-mono text-muted-foreground mb-2">
-                      Full Name *
+                      {t("ea.fullName")}
                     </label>
                     <input
                       type="text"
                       value={name}
                       onChange={(e) => setName(e.target.value)}
-                      placeholder="John Doe"
+                      placeholder={t("ea.namePlaceholder")}
                       required
                       className="w-full px-4 py-3 bg-card border border-border font-mono focus:outline-none focus:border-foreground transition-colors"
                     />
@@ -105,13 +108,13 @@ export default function EarlyAccessPage() {
                     transition={{ delay: 0.2 }}
                   >
                     <label className="block text-sm font-mono text-muted-foreground mb-2">
-                      Email Address *
+                      {t("ea.email")}
                     </label>
                     <input
                       type="email"
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
-                      placeholder="john@company.com"
+                      placeholder={t("ea.emailPlaceholder")}
                       required
                       className="w-full px-4 py-3 bg-card border border-border font-mono focus:outline-none focus:border-foreground transition-colors"
                     />
@@ -123,13 +126,13 @@ export default function EarlyAccessPage() {
                     transition={{ delay: 0.3 }}
                   >
                     <label className="block text-sm font-mono text-muted-foreground mb-2">
-                      Company
+                      {t("ea.company")}
                     </label>
                     <input
                       type="text"
                       value={company}
                       onChange={(e) => setCompany(e.target.value)}
-                      placeholder="Acme Inc."
+                      placeholder={t("ea.companyPlaceholder")}
                       className="w-full px-4 py-3 bg-card border border-border font-mono focus:outline-none focus:border-foreground transition-colors"
                     />
                   </motion.div>
@@ -140,20 +143,20 @@ export default function EarlyAccessPage() {
                     transition={{ delay: 0.4 }}
                   >
                     <label className="block text-sm font-mono text-muted-foreground mb-2">
-                      Primary Use Case
+                      {t("ea.useCase")}
                     </label>
                     <select
                       value={useCase}
                       onChange={(e) => setUseCase(e.target.value)}
                       className="w-full px-4 py-3 bg-card border border-border font-mono focus:outline-none focus:border-foreground transition-colors appearance-none cursor-pointer"
                     >
-                      <option value="">Select a use case...</option>
-                      <option value="vulnerability">Vulnerability Scanning</option>
-                      <option value="pentest">Penetration Testing</option>
-                      <option value="code">Code Analysis</option>
-                      <option value="monitoring">Continuous Monitoring</option>
-                      <option value="compliance">Compliance Auditing</option>
-                      <option value="other">Other</option>
+                      <option value="">{t("ea.useCaseSelect")}</option>
+                      <option value="vulnerability">{t("ea.useCaseVulnerability")}</option>
+                      <option value="pentest">{t("ea.useCasePentest")}</option>
+                      <option value="code">{t("ea.useCaseCode")}</option>
+                      <option value="monitoring">{t("ea.useCaseMonitoring")}</option>
+                      <option value="compliance">{t("ea.useCaseCompliance")}</option>
+                      <option value="other">{t("ea.useCaseOther")}</option>
                     </select>
                   </motion.div>
 
@@ -174,11 +177,11 @@ export default function EarlyAccessPage() {
                             <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
                             <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
                           </svg>
-                          Joining...
+                          {t("ea.joining")}
                         </>
                       ) : (
                         <>
-                          Join Waitlist
+                          {t("ea.joinWaitlist")}
                           <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
                           </svg>
@@ -193,8 +196,8 @@ export default function EarlyAccessPage() {
                     transition={{ delay: 0.6 }}
                     className="text-center text-xs text-muted-foreground mt-4"
                   >
-                    By joining, you agree to receive updates about Luna X.
-                    <br />No spam, unsubscribe anytime.
+                    {t("ea.consent")}
+                    <br />{t("ea.noSpam")}
                   </motion.p>
                 </form>
 
@@ -208,15 +211,15 @@ export default function EarlyAccessPage() {
                   <div className="grid grid-cols-3 gap-4 text-center">
                     <div>
                       <div className="text-2xl font-bold font-mono">2,847</div>
-                      <div className="text-xs text-muted-foreground">On Waitlist</div>
+                      <div className="text-xs text-muted-foreground">{t("ea.onWaitlist")}</div>
                     </div>
                     <div>
                       <div className="text-2xl font-bold font-mono">Q2 2026</div>
-                      <div className="text-xs text-muted-foreground">Beta Launch</div>
+                      <div className="text-xs text-muted-foreground">{t("ea.betaLaunch")}</div>
                     </div>
                     <div>
                       <div className="text-2xl font-bold font-mono">100</div>
-                      <div className="text-xs text-muted-foreground">Beta Spots</div>
+                      <div className="text-xs text-muted-foreground">{t("ea.betaSpots")}</div>
                     </div>
                   </div>
                 </motion.div>
@@ -240,20 +243,20 @@ export default function EarlyAccessPage() {
                 </motion.div>
 
                 <h2 className="text-3xl md:text-4xl font-bold mb-4">
-                  You're on the list!
+                  {t("ea.successTitle")}
                 </h2>
                 <p className="text-muted-foreground mb-8 max-w-md mx-auto">
-                  Thanks for joining, {name}! We'll notify you at <span className="text-foreground">{email}</span> when your spot is ready.
+                  {t("ea.successDesc1")} {name}{t("ea.successDesc2")} <span className="text-foreground">{email}</span> {t("ea.successDesc3")}
                 </p>
 
                 <div className="inline-block border border-border p-6 mb-8">
-                  <div className="text-sm text-muted-foreground mb-2 font-mono">YOUR POSITION</div>
+                  <div className="text-sm text-muted-foreground mb-2 font-mono">{t("ea.yourPosition")}</div>
                   <div className="text-5xl font-bold font-mono">#{queuePosition}</div>
                 </div>
 
                 <div className="space-y-4">
                   <p className="text-sm text-muted-foreground">
-                    Move up the list by sharing Luna X
+                    {t("ea.shareText")}
                   </p>
                   <div className="flex items-center justify-center gap-4">
                     <button className="p-3 border border-border hover:border-foreground hover:bg-foreground hover:text-background transition-colors">
@@ -282,7 +285,7 @@ export default function EarlyAccessPage() {
                     <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
                     </svg>
-                    Try our free scanner while you wait
+                    {t("ea.tryScanner")}
                   </Link>
                 </div>
               </motion.div>

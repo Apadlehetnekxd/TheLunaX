@@ -5,6 +5,8 @@ import { useEffect, useState, useRef } from "react"
 import { motion, useScroll, useTransform, useSpring, useInView } from "framer-motion"
 import Link from "next/link"
 import MatrixRain from "./MatrixRain" // Import MatrixRain component
+import LanguageSelector from "@/components/LanguageSelector"
+import { useLanguage } from "@/lib/language-context"
 
 // Glitch Text Component
 function GlitchText({ text, className = "" }: { text: string; className?: string }) {
@@ -356,6 +358,7 @@ export default function LunaXPage() {
   const containerRef = useRef(null)
   const { scrollYProgress } = useScroll({ target: containerRef })
   const smoothProgress = useSpring(scrollYProgress, { stiffness: 100, damping: 30 })
+  const { t } = useLanguage()
 
   const heroOpacity = useTransform(smoothProgress, [0, 0.15], [1, 0])
   const heroScale = useTransform(smoothProgress, [0, 0.15], [1, 0.8])
@@ -369,23 +372,23 @@ export default function LunaXPage() {
 
   const features = [
     {
-      title: "Vulnerability Scanner",
-      description: "AI-powered deep scanning for security vulnerabilities. Real-time threat detection with zero false positives.",
+      title: t("home.feature1.title"),
+      description: t("home.feature1.description"),
     },
     {
-      title: "Penetration Testing",
-      description: "Automated ethical hacking simulations. Test your defenses before attackers do.",
+      title: t("home.feature2.title"),
+      description: t("home.feature2.description"),
     },
     {
-      title: "Code Analysis",
-      description: "Static and dynamic code analysis. Find security flaws in your source before deployment.",
+      title: t("home.feature3.title"),
+      description: t("home.feature3.description"),
     },
   ]
 
   const stats = [
-    { value: 99, suffix: "%", label: "Accuracy Rate" },
-    { value: 500, suffix: "K+", label: "Scans Completed" },
-    { value: 24, suffix: "/7", label: "Monitoring" },
+    { value: 99, suffix: "%", label: t("home.stats.accuracy") },
+    { value: 500, suffix: "K+", label: t("home.stats.scans") },
+    { value: 24, suffix: "/7", label: t("home.stats.monitoring") },
   ]
 
   return (
@@ -399,6 +402,11 @@ export default function LunaXPage() {
           className="fixed top-0 left-0 right-0 h-[2px] bg-foreground origin-left z-40"
           style={{ scaleX: smoothProgress }}
         />
+
+        {/* Language Selector - Fixed top right */}
+        <div className="fixed top-4 right-4 z-50">
+          <LanguageSelector />
+        </div>
 
         {/* Hero Section */}
         <motion.section
@@ -414,7 +422,7 @@ export default function LunaXPage() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.2 }}
               >
-                ETHICAL HACKER AI
+                {t("home.subtitle")}
               </motion.p>
 
               <motion.div
@@ -434,7 +442,7 @@ export default function LunaXPage() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.6 }}
               >
-                The future of security testing. Powered by artificial intelligence.
+                {t("home.tagline")}
               </motion.p>
 
               <motion.div
@@ -446,7 +454,7 @@ export default function LunaXPage() {
                 <Link href="/scan">
                   <MagneticButton className="px-8 py-4 border border-foreground text-foreground group-hover:text-background transition-colors text-lg font-medium">
                     <span className="group-hover:text-background transition-colors duration-300">
-                      Start Scanning
+                      {t("home.startScanning")}
                     </span>
                     <svg
                       className="w-5 h-5 group-hover:text-background transition-colors duration-300"
@@ -472,7 +480,7 @@ export default function LunaXPage() {
                 animate={{ opacity: 1 }}
                 transition={{ delay: 1.2 }}
               >
-                <span className="text-xs font-mono text-muted-foreground tracking-widest">SCROLL</span>
+                <span className="text-xs font-mono text-muted-foreground tracking-widest">{t("home.scroll")}</span>
                 <motion.div
                   className="w-[1px] h-12 bg-gradient-to-b from-foreground to-transparent"
                   animate={{ scaleY: [1, 0.5, 1] }}
@@ -521,7 +529,7 @@ export default function LunaXPage() {
               viewport={{ once: true }}
             >
               <h2 className="text-4xl md:text-6xl font-bold">
-                <GlitchText text="CAPABILITIES" />
+                <GlitchText text={t("home.capabilities")} />
               </h2>
             </motion.div>
 
@@ -542,8 +550,8 @@ export default function LunaXPage() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
             >
-              Ready to<br />
-              <span className="text-muted-foreground">secure</span> your future?
+              {t("home.cta.title1")}<br />
+              <span className="text-muted-foreground">{t("home.cta.title2")}</span> {t("home.cta.title3")}
             </motion.h2>
 
             <motion.div
@@ -554,7 +562,7 @@ export default function LunaXPage() {
             >
               <Link href="/early-access">
                 <MagneticButton className="px-12 py-5 bg-foreground text-background text-lg font-medium">
-                  <span>Get Early Access</span>
+                  <span>{t("home.cta.button")}</span>
                   <svg
                     className="w-5 h-5"
                     fill="none"
@@ -579,7 +587,7 @@ export default function LunaXPage() {
               viewport={{ once: true }}
               transition={{ delay: 0.5 }}
             >
-              No credit card required. Start free.
+              {t("home.cta.noCreditCard")}
             </motion.p>
           </div>
         </section>
@@ -591,7 +599,7 @@ export default function LunaXPage() {
               LUNA<span className="text-muted-foreground">X</span>
             </div>
             <p className="text-sm text-muted-foreground font-mono">
-              2026 Luna X. All systems protected.
+              {t("home.footer")}
             </p>
           </div>
         </footer>

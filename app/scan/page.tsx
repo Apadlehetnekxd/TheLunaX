@@ -4,6 +4,8 @@ import { useState, useEffect, useRef } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import Link from "next/link"
 import MatrixRain from "@/components/MatrixRain" // Import MatrixRain component
+import LanguageSelector from "@/components/LanguageSelector"
+import { useLanguage } from "@/lib/language-context"
 
 type ScanResult = {
   type: "info" | "warning" | "critical" | "safe"
@@ -195,20 +197,21 @@ export default function ScanPage() {
   const [scanComplete, setScanComplete] = useState(false)
   const [liveFindings, setLiveFindings] = useState<ScanResult[]>([])
   const [error, setError] = useState<string | null>(null)
+  const { t } = useLanguage()
 
-  const phases = [
-    "Initializing scan...",
-    "Resolving DNS records...",
-    "Analyzing SSL/TLS configuration...",
-    "Scanning open ports...",
-    "Testing for SQL injection...",
-    "Checking XSS vulnerabilities...",
-    "Analyzing HTTP headers...",
-    "Testing authentication security...",
-    "Scanning for exposed files...",
-    "Checking API endpoints...",
-    "Analyzing cookie security...",
-    "Generating comprehensive report...",
+  const phaseKeys = [
+    "scan.phase.init",
+    "scan.phase.dns",
+    "scan.phase.ssl",
+    "scan.phase.ports",
+    "scan.phase.sql",
+    "scan.phase.xss",
+    "scan.phase.headers",
+    "scan.phase.auth",
+    "scan.phase.files",
+    "scan.phase.api",
+    "scan.phase.cookies",
+    "scan.phase.report",
   ]
 
   const startScan = async () => {
@@ -218,26 +221,26 @@ export default function ScanPage() {
     
     // Validate URL format
     if (!isValidUrl(url)) {
-      setError("Please enter a valid URL (e.g., https://example.com)")
+      setError(t("scan.errorInvalidUrl"))
       return
     }
     
     // Check if URL is reachable
     setIsValidating(true)
-    setCurrentPhase("Validating target URL...")
+    setCurrentPhase(t("scan.validating"))
     
     try {
       const response = await fetch(`/api/validate-url?url=${encodeURIComponent(url)}`)
       const data = await response.json()
       
       if (!data.valid) {
-        setError(data.error || "URL is not reachable. Please check the URL and try again.")
+        setError(data.error || t("scan.errorUnreachable"))
         setIsValidating(false)
         setCurrentPhase("")
         return
       }
     } catch {
-      setError("Failed to validate URL. Please check your connection and try again.")
+      setError(t("scan.errorConnection"))
       setIsValidating(false)
       setCurrentPhase("")
       return
@@ -276,10 +279,10 @@ export default function ScanPage() {
       }
       setProgress(Math.min(currentProgress, 100))
 
-      const newPhaseIndex = Math.floor((currentProgress / 100) * phases.length)
-      if (newPhaseIndex !== phaseIndex && newPhaseIndex < phases.length) {
+      const newPhaseIndex = Math.floor((currentProgress / 100) * phaseKeys.length)
+      if (newPhaseIndex !== phaseIndex && newPhaseIndex < phaseKeys.length) {
         phaseIndex = newPhaseIndex
-        setCurrentPhase(phases[phaseIndex])
+        setCurrentPhase(t(phaseKeys[phaseIndex]))
       }
     }, 150)
   }
@@ -302,9 +305,9 @@ export default function ScanPage() {
       case "critical":
         return "!"
       case "warning":
-        return "⚠"
+        return "W"
       case "safe":
-        return "✓"
+        return "OK"
       default:
         return "i"
     }
@@ -319,10 +322,11 @@ export default function ScanPage() {
           <Link href="/" className="font-bold text-2xl tracking-tighter hover:opacity-70 transition-opacity">
             LUNA<span className="text-muted-foreground">X</span>
           </Link>
-          <nav className="flex items-center gap-6">
+          <nav className="flex items-center gap-4">
             <Link href="/early-access" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
-              Early Access
+              {t("scan.navEarlyAccess")}
             </Link>
+            <LanguageSelector />
           </nav>
         </div>
       </header>
@@ -335,10 +339,10 @@ export default function ScanPage() {
           className="text-center mb-12"
         >
           <h1 className="text-4xl md:text-6xl font-bold mb-4">
-            Vulnerability<span className="text-muted-foreground"> Scanner</span>
+            {t("scan.title")}<span className="text-muted-foreground">{t("scan.titleAccent")}</span>
           </h1>
           <p className="text-muted-foreground max-w-lg mx-auto">
-            Enter a URL to scan for security vulnerabilities. Our AI-powered scanner will analyze your target for common security issues.
+            {t("scan.description")}
           </p>
         </motion.div>
 
@@ -355,7 +359,7 @@ export default function ScanPage() {
                 type="url"
                 value={url}
                 onChange={(e) => setUrl(e.target.value)}
-                placeholder="https://example.com"
+                placeholder={t("scan.placeholder")}
                 disabled={isScanning}
                 className="w-full px-6 py-4 bg-card border border-border rounded-none font-mono text-lg focus:outline-none focus:border-foreground transition-colors disabled:opacity-50"
               />
@@ -376,7 +380,7 @@ export default function ScanPage() {
                     <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
                     <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
                   </svg>
-                  Validating...
+                  {t("scan.validating")}
                 </>
               ) : isScanning ? (
                 <>
@@ -384,11 +388,11 @@ export default function ScanPage() {
                     <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
                     <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
                   </svg>
-                  Scanning...
+                  {t("scan.scanning")}
                 </>
               ) : (
                 <>
-                  Start Scan
+                  {t("scan.startScan")}
                   <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
                   </svg>
@@ -441,26 +445,26 @@ export default function ScanPage() {
                     animate={{ opacity: [0.3, 1, 0.3] }}
                     transition={{ duration: 1.5, repeat: Infinity }}
                   >
-                    {">"} Analyzing target: {url}
+                    {">"} {t("scan.analyzingTarget")} {url}
                   </motion.div>
                   <motion.div
                     animate={{ opacity: [0.3, 1, 0.3] }}
                     transition={{ duration: 1.5, repeat: Infinity, delay: 0.3 }}
                   >
-                    {">"} Running security modules...
+                    {">"} {t("scan.runningModules")}
                   </motion.div>
                   <motion.div
                     animate={{ opacity: [0.3, 1, 0.3] }}
                     transition={{ duration: 1.5, repeat: Infinity, delay: 0.6 }}
                   >
-                    {">"} AI threat detection active
+                    {">"} {t("scan.aiThreatDetection")}
                   </motion.div>
                 </div>
                 
                 {/* Live Findings */}
                 {liveFindings.length > 0 && (
                   <div className="mt-6 space-y-2 max-h-48 overflow-y-auto">
-                    <div className="text-xs text-muted-foreground mb-2">Live findings:</div>
+                    <div className="text-xs text-muted-foreground mb-2">{t("scan.liveFindings")}</div>
                     {liveFindings.map((finding, i) => (
                       <motion.div
                         key={`${finding.message}-${i}`}
@@ -492,19 +496,19 @@ export default function ScanPage() {
               className="space-y-4"
             >
               <div className="flex items-center justify-between mb-6">
-                <h2 className="text-2xl font-bold">Scan Results</h2>
+                <h2 className="text-2xl font-bold">{t("scan.results")}</h2>
                 <div className="flex items-center gap-4 text-sm font-mono">
-                  <span className="text-green-400">{results.filter(r => r.type === "safe").length} Safe</span>
-                  <span className="text-blue-400">{results.filter(r => r.type === "info").length} Info</span>
-                  <span className="text-yellow-400">{results.filter(r => r.type === "warning").length} Warnings</span>
-                  <span className="text-red-400">{results.filter(r => r.type === "critical").length} Critical</span>
+                  <span className="text-green-400">{results.filter(r => r.type === "safe").length} {t("scan.safe")}</span>
+                  <span className="text-blue-400">{results.filter(r => r.type === "info").length} {t("scan.info")}</span>
+                  <span className="text-yellow-400">{results.filter(r => r.type === "warning").length} {t("scan.warnings")}</span>
+                  <span className="text-red-400">{results.filter(r => r.type === "critical").length} {t("scan.critical")}</span>
                 </div>
               </div>
 
               {/* Security Score */}
               <div className="border border-border p-6 bg-card mb-6">
                 <div className="flex items-center justify-between mb-4">
-                  <span className="text-lg font-medium">Security Score</span>
+                  <span className="text-lg font-medium">{t("scan.securityScore")}</span>
                   <span className={`text-3xl font-bold ${
                     results.filter(r => r.type === "critical").length > 0 ? "text-red-400" :
                     results.filter(r => r.type === "warning").length > 2 ? "text-yellow-400" :
@@ -557,13 +561,13 @@ export default function ScanPage() {
                 className="pt-8 text-center"
               >
                 <p className="text-muted-foreground text-sm mb-4">
-                  Want a full security audit with detailed recommendations?
+                  {t("scan.fullAudit")}
                 </p>
                 <Link
                   href="/early-access"
                   className="inline-flex items-center gap-2 px-6 py-3 border border-foreground text-foreground hover:bg-foreground hover:text-background transition-colors"
                 >
-                  Get Full Report
+                  {t("scan.getFullReport")}
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
                   </svg>
@@ -586,9 +590,9 @@ export default function ScanPage() {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
               </svg>
             </div>
-            <h3 className="text-xl font-medium mb-2">Ready to Scan</h3>
+            <h3 className="text-xl font-medium mb-2">{t("scan.readyToScan")}</h3>
             <p className="text-muted-foreground text-sm">
-              Enter a URL above to start scanning for vulnerabilities
+              {t("scan.readyToScanDesc")}
             </p>
           </motion.div>
         )}
