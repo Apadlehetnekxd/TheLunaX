@@ -27,7 +27,7 @@ interface Message {
   parts: Array<{ type: "text"; text: string }>
 }
 
-const LUNA_X_SYSTEM_PROMPT = `## You are the Luna X AI Cybersecurity Assistant. Communicate in a professional, modern, and technical tone.
+const LUNA_X_SYSTEM_PROMPT = ` # You are the Luna X AI Cybersecurity Assistant. Communicate in a professional, modern, and technical tone.
 
 ## Persona
 - Expert cybersecurity consultant
@@ -80,6 +80,7 @@ const LUNA_X_SYSTEM_PROMPT = `## You are the Luna X AI Cybersecurity Assistant. 
 - Default: **English**
 - Only switch if the user explicitly requests another language
 - Exception: If the user enters **Misike**, respond in the user's language as defined above.
+`;
 
 export default function LunaXChatPage() {
   const [input, setInput] = useState("")
