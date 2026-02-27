@@ -162,7 +162,7 @@ function FeatureCard({
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      <div className="relative overflow-hidden border border-border p-8 md:p-12 bg-card transition-all duration-500 group-hover:border-foreground">
+      <div className="relative overflow-hidden border border-border p-8 md:p-12 bg-card transition-all duration-500 group-hover:border-foreground"> 
         {/* Hover Fill Effect */}
         <motion.div 
           className="absolute inset-0 bg-foreground"
@@ -172,7 +172,7 @@ function FeatureCard({
         />
 
         {/* Content */}
-        <div className="relative z-10">
+        <div className="relative z-10"> 
           <span className="font-mono text-sm text-muted-foreground group-hover:text-background transition-colors duration-300">
             0{index + 1}
           </span>
@@ -316,7 +316,7 @@ export default function LunaXPage() {
         >
           {/* Video background (public/aa.mp4) */}
           <video
-            className="absolute inset-0 w-full h-full object-cover"
+            className="absolute inset-0 w-full h-full object-cover z-0"
             src="/aa.mp4"
             autoPlay
             muted
@@ -326,10 +326,10 @@ export default function LunaXPage() {
           />
 
           {/* Readability overlay */}
-          <div className="absolute inset-0 bg-background/50" />
+          <div className="absolute inset-0 bg-background/50 z-0" />
 
           {isLoaded && (
-            <>
+            <div className="relative z-10 flex flex-col items-center">
               <motion.p
                 className="font-mono text-sm text-muted-foreground mb-8 tracking-widest"
                 initial={{ opacity: 0, y: 20 }}
@@ -399,7 +399,7 @@ export default function LunaXPage() {
                   transition={{ duration: 1.5, repeat: Infinity }}
                 />
               </motion.div>
-            </>
+            </div>
           )}
         </motion.section>
 
