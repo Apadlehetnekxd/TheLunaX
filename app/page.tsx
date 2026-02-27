@@ -8,7 +8,7 @@ import Link from "next/link"
 // Glitch Text Component
 function GlitchText({ text, className = "" }: { text: string; className?: string }) {
   return (
-    <div className={`relative inline-block ${className}`}> 
+    <div className={`relative inline-block ${className}`}>  
       <span className="relative z-10">{text}</span>
       <span
         className="absolute inset-0 text-foreground opacity-80 animate-glitch-1"
@@ -57,10 +57,10 @@ function IntroAnimation({ onComplete }: { onComplete: () => void }) {
 
       {/* Glitch Bars */}
       {phase >= 1 && (
-        <> 
+        <>  
           {[...Array(5)].map((_, i) => (
-            <motion.div 
-              key={i} 
+            <motion.div
+              key={i}
               className="absolute h-[2px] bg-foreground"
               initial={{ width: 0, left: "50%" }}
               animate={{
@@ -89,7 +89,7 @@ function IntroAnimation({ onComplete }: { onComplete: () => void }) {
           <motion.h1
             className="text-7xl md:text-[12rem] font-bold tracking-tighter"
             animate={
-              phase >= 3 
+              phase >= 3
                 ? {
                     x: [0, -5, 5, -3, 3, 0],
                     textShadow: [
@@ -119,14 +119,14 @@ function IntroAnimation({ onComplete }: { onComplete: () => void }) {
 
       {/* Corner Brackets */}
       {phase >= 2 && (
-        <> 
+        <>  
           <motion.div
             className="absolute top-1/4 left-1/4 w-16 h-16 border-l-2 border-t-2 border-foreground"
             initial={{ opacity: 0, scale: 0.5 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.2 }}
           />
-          <motion.div 
+          <motion.div
             className="absolute bottom-1/4 right-1/4 w-16 h-16 border-r-2 border-b-2 border-foreground"
             initial={{ opacity: 0, scale: 0.5 }}
             animate={{ opacity: 1, scale: 1 }}
@@ -153,8 +153,8 @@ function FeatureCard({
   const [isHovered, setIsHovered] = useState(false)
 
   return (
-    <motion.div 
-      ref={ref} 
+    <motion.div
+      ref={ref}
       className="relative group cursor-pointer"
       initial={{ opacity: 0, y: 100 }}
       animate={isInView ? { opacity: 1, y: 0 } : {}}
@@ -164,7 +164,7 @@ function FeatureCard({
     >
       <div className="relative overflow-hidden border border-border p-8 md:p-12 bg-card transition-all duration-500 group-hover:border-foreground">
         {/* Hover Fill Effect */}
-        <motion.div 
+        <motion.div
           className="absolute inset-0 bg-foreground"
           initial={{ y: "100%" }}
           animate={{ y: isHovered ? "0%" : "100%" }}
@@ -261,7 +261,6 @@ function MagneticButton({ children, className = "" }: { children: React.ReactNod
 // Main Page
 export default function LunaXPage() {
   const [showIntro, setShowIntro] = useState(true)
-  const [isLoaded, setIsLoaded] = useState(false)
   const containerRef = useRef(null)
   const { scrollYProgress } = useScroll({ target: containerRef })
   const smoothProgress = useSpring(scrollYProgress, { stiffness: 100, damping: 30 })
@@ -269,12 +268,6 @@ export default function LunaXPage() {
   const heroOpacity = useTransform(smoothProgress, [0, 0.15], [1, 0])
   const heroScale = useTransform(smoothProgress, [0, 0.15], [1, 0.8])
   const heroY = useTransform(smoothProgress, [0, 0.15], [0, -100])
-
-  useEffect(() => {
-    if (!showIntro) {
-      setTimeout(() => setIsLoaded(true), 100)
-    }
-  }, [showIntro])
 
   const features = [
     {
@@ -299,7 +292,7 @@ export default function LunaXPage() {
   ]
 
   return (
-    <>
+    <>  
       {showIntro && <IntroAnimation onComplete={() => setShowIntro(false)} />}
 
       <div ref={containerRef} className="relative min-h-[500vh] bg-background">
@@ -325,82 +318,64 @@ export default function LunaXPage() {
             preload="auto"
           />
 
-          {/* Readability overlay */}
-          <div className="absolute inset-0 bg-background/50" />
+          <>  
+            <motion.p
+              className="font-mono text-sm text-muted-foreground mb-8 tracking-widest"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2 }}
+            >
+              ETHICAL HACKER AI
+            </motion.p>
 
-          {isLoaded && (
-            <>
-              <motion.p
-                className="font-mono text-sm text-muted-foreground mb-8 tracking-widest"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.2 }}
-              >
-                ETHICAL HACKER AI
-              </motion.p>
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: 0.4, duration: 0.8 }}
+            >
+              <GlitchText text="LUNA X" className="text-6xl md:text-[10rem] font-bold tracking-tighter leading-none" />
+            </motion.div>
 
+            <motion.p
+              className="text-lg md:text-xl text-muted-foreground mt-8 max-w-md text-center"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.6 }}
+            >
+              The future of security testing. Powered by artificial intelligence.
+            </motion.p>
+
+            <motion.div
+              className="mt-14"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.8 }}
+            >
+              <Link href="/ai">
+                <MagneticButton className="px-8 py-4 border border-foreground text-foreground group-hover:text-background transition-colors text-lg font-medium">
+                  <span className="group-hover:text-background transition-colors duration-300">Launch Beta</span>
+                  <svg className="w-5 h-5 group-hover:text-background transition-colors duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                  </svg>
+                </MagneticButton>
+              </Link>
+            </motion.div>
+
+            {/* Scroll Indicator */}
+            <motion.div
+              className="absolute bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 1.2 }}
+            >
+              <span className="text-xs font-mono text-muted-foreground tracking-widest">SCROLL</span>
               <motion.div
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ delay: 0.4, duration: 0.8 }}
-              >
-                <GlitchText
-                  text="LUNA X"
-                  className="text-6xl md:text-[10rem] font-bold tracking-tighter leading-none"
-                />
-              </motion.div>
-
-              <motion.p
-                className="text-lg md:text-xl text-muted-foreground mt-8 max-w-md text-center"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.6 }}
-              >
-                The future of security testing. Powered by artificial intelligence.
-              </motion.p>
-
-              <motion.div
-                className="mt-12"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.8 }}
-              >
-                <Link href="/ai">
-                  <MagneticButton className="px-8 py-4 border border-foreground text-foreground group-hover:text-background transition-colors text-lg font-medium">
-                    <span className="group-hover:text-background transition-colors duration-300">Launch Beta</span>
-                    <svg
-                      className="w-5 h-5 group-hover:text-background transition-colors duration-300"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M17 8l4 4m0 0l-4 4m4-4H3"
-                      />
-                    </svg>
-                  </MagneticButton>
-                </Link>
-              </motion.div>
-
-              {/* Scroll Indicator */}
-              <motion.div
-                className="absolute bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 1.2 }}
-              >
-                <span className="text-xs font-mono text-muted-foreground tracking-widest">SCROLL</span>
-                <motion.div
-                  className="w-[1px] h-12 bg-gradient-to-b from-foreground to-transparent"
-                  animate={{ scaleY: [1, 0.5, 1] }}
-                  transition={{ duration: 1.5, repeat: Infinity }}
-                />
-              </motion.div>
-            </>
-          )}
+                className="w-[1px] h-12 bg-gradient-to-b from-foreground to-transparent"
+                animate={{ scaleY: [1, 0.5, 1] }}
+                transition={{ duration: 1.5, repeat: Infinity }}
+              />
+            </motion.div>
+          </>
         </motion.section>
 
         {/* Spacer for scroll */}
@@ -470,12 +445,7 @@ export default function LunaXPage() {
                 <MagneticButton className="px-12 py-5 bg-foreground text-background text-lg font-medium">
                   <span>Get Early Access</span>
                   <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M13 7l5 5m0 0l-5 5m5-5H6"
-                    />
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
                   </svg>
                 </MagneticButton>
               </Link>
