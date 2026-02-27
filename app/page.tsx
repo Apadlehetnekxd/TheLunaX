@@ -4,120 +4,26 @@ import React from "react"
 import { useEffect, useState, useRef } from "react"
 import { motion, useScroll, useTransform, useSpring, useInView } from "framer-motion"
 import Link from "next/link"
-import MatrixRain from "./MatrixRain" // Import MatrixRain component
 
 // Glitch Text Component
 function GlitchText({ text, className = "" }: { text: string; className?: string }) {
   return (
-    <div className={`relative inline-block ${className}`}>
+    <div className={`relative inline-block ${className}`}> 
       <span className="relative z-10">{text}</span>
-      <span 
+      <span
         className="absolute inset-0 text-foreground opacity-80 animate-glitch-1"
         style={{ clipPath: "polygon(0 0, 100% 0, 100% 45%, 0 45%)" }}
         aria-hidden
       >
         {text}
       </span>
-      <span 
+      <span
         className="absolute inset-0 text-foreground opacity-80 animate-glitch-2"
         style={{ clipPath: "polygon(0 55%, 100% 55%, 100% 100%, 0 100%)" }}
         aria-hidden
       >
         {text}
       </span>
-    </div>
-  )
-}
-
-// Hero Background Animation - Animated rings and glow effect
-function HeroBackground() {
-  return (
-    <div className="absolute inset-0 overflow-hidden pointer-events-none">
-      {/* Central glow */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] md:w-[800px] md:h-[800px]">
-        {/* Pulsing core glow */}
-        <motion.div
-          className="absolute inset-0 rounded-full bg-white/5 blur-[100px]"
-          animate={{
-            scale: [1, 1.2, 1],
-            opacity: [0.3, 0.5, 0.3],
-          }}
-          transition={{
-            duration: 4,
-            repeat: Infinity,
-            ease: "easeInOut",
-          }}
-        />
-        
-        {/* Rotating rings */}
-        {[...Array(4)].map((_, i) => (
-          <motion.div
-            key={i}
-            className="absolute inset-0 border border-white/10 rounded-full"
-            style={{
-              inset: `${i * 60}px`,
-            }}
-            animate={{
-              rotate: i % 2 === 0 ? 360 : -360,
-              scale: [1, 1.02, 1],
-            }}
-            transition={{
-              rotate: {
-                duration: 20 + i * 5,
-                repeat: Infinity,
-                ease: "linear",
-              },
-              scale: {
-                duration: 3 + i,
-                repeat: Infinity,
-                ease: "easeInOut",
-              },
-            }}
-          />
-        ))}
-
-        {/* Floating particles */}
-        {[...Array(12)].map((_, i) => (
-          <motion.div
-            key={`particle-${i}`}
-            className="absolute w-1 h-1 bg-white/30 rounded-full"
-            style={{
-              top: `${20 + Math.random() * 60}%`,
-              left: `${20 + Math.random() * 60}%`,
-            }}
-            animate={{
-              y: [0, -20, 0],
-              x: [0, Math.random() * 10 - 5, 0],
-              opacity: [0.2, 0.6, 0.2],
-            }}
-            transition={{
-              duration: 3 + Math.random() * 2,
-              repeat: Infinity,
-              delay: i * 0.3,
-              ease: "easeInOut",
-            }}
-          />
-        ))}
-      </div>
-
-      {/* Corner accents */}
-      <div className="absolute top-0 left-0 w-32 h-32 border-l border-t border-white/5" />
-      <div className="absolute top-0 right-0 w-32 h-32 border-r border-t border-white/5" />
-      <div className="absolute bottom-0 left-0 w-32 h-32 border-l border-b border-white/5" />
-      <div className="absolute bottom-0 right-0 w-32 h-32 border-r border-b border-white/5" />
-
-      {/* Scan line effect */}
-      <motion.div
-        className="absolute left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-white/20 to-transparent"
-        animate={{
-          top: ["0%", "100%"],
-        }}
-        transition={{
-          duration: 8,
-          repeat: Infinity,
-          ease: "linear",
-        }}
-      />
     </div>
   )
 }
@@ -151,10 +57,10 @@ function IntroAnimation({ onComplete }: { onComplete: () => void }) {
 
       {/* Glitch Bars */}
       {phase >= 1 && (
-        <>
+        <> 
           {[...Array(5)].map((_, i) => (
-            <motion.div
-              key={i}
+            <motion.div 
+              key={i} 
               className="absolute h-[2px] bg-foreground"
               initial={{ width: 0, left: "50%" }}
               animate={{
@@ -182,15 +88,19 @@ function IntroAnimation({ onComplete }: { onComplete: () => void }) {
         >
           <motion.h1
             className="text-7xl md:text-[12rem] font-bold tracking-tighter"
-            animate={phase >= 3 ? {
-              x: [0, -5, 5, -3, 3, 0],
-              textShadow: [
-                "0 0 0 transparent",
-                "-5px 0 0 rgba(255,255,255,0.8), 5px 0 0 rgba(100,100,100,0.8)",
-                "5px 0 0 rgba(255,255,255,0.8), -5px 0 0 rgba(100,100,100,0.8)",
-                "0 0 0 transparent",
-              ]
-            } : {}}
+            animate={
+              phase >= 3 
+                ? {
+                    x: [0, -5, 5, -3, 3, 0],
+                    textShadow: [
+                      "0 0 0 transparent",
+                      "-5px 0 0 rgba(255,255,255,0.8), 5px 0 0 rgba(100,100,100,0.8)",
+                      "5px 0 0 rgba(255,255,255,0.8), -5px 0 0 rgba(100,100,100,0.8)",
+                      "0 0 0 transparent",
+                    ],
+                  }
+                : {}
+            }
             transition={{ duration: 0.5, repeat: phase >= 3 ? 2 : 0 }}
           >
             <span className="inline-block">LUNA</span>
@@ -209,14 +119,14 @@ function IntroAnimation({ onComplete }: { onComplete: () => void }) {
 
       {/* Corner Brackets */}
       {phase >= 2 && (
-        <>
+        <> 
           <motion.div
             className="absolute top-1/4 left-1/4 w-16 h-16 border-l-2 border-t-2 border-foreground"
             initial={{ opacity: 0, scale: 0.5 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.2 }}
           />
-          <motion.div
+          <motion.div 
             className="absolute bottom-1/4 right-1/4 w-16 h-16 border-r-2 border-b-2 border-foreground"
             initial={{ opacity: 0, scale: 0.5 }}
             animate={{ opacity: 1, scale: 1 }}
@@ -229,22 +139,22 @@ function IntroAnimation({ onComplete }: { onComplete: () => void }) {
 }
 
 // Interactive Feature Card
-function FeatureCard({ 
-  title, 
-  description, 
-  index 
-}: { 
+function FeatureCard({
+  title,
+  description,
+  index,
+}: {
   title: string
   description: string
-  index: number 
+  index: number
 }) {
   const ref = useRef(null)
   const isInView = useInView(ref, { once: true, margin: "-100px" })
   const [isHovered, setIsHovered] = useState(false)
 
   return (
-    <motion.div
-      ref={ref}
+    <motion.div 
+      ref={ref} 
       className="relative group cursor-pointer"
       initial={{ opacity: 0, y: 100 }}
       animate={isInView ? { opacity: 1, y: 0 } : {}}
@@ -254,7 +164,7 @@ function FeatureCard({
     >
       <div className="relative overflow-hidden border border-border p-8 md:p-12 bg-card transition-all duration-500 group-hover:border-foreground">
         {/* Hover Fill Effect */}
-        <motion.div
+        <motion.div 
           className="absolute inset-0 bg-foreground"
           initial={{ y: "100%" }}
           animate={{ y: isHovered ? "0%" : "100%" }}
@@ -307,7 +217,8 @@ function AnimatedCounter({ target, suffix = "" }: { target: number; suffix?: str
 
   return (
     <span ref={ref} className="font-mono tabular-nums">
-      {count.toLocaleString()}{suffix}
+      {count.toLocaleString()}
+      {suffix}
     </span>
   )
 }
@@ -336,9 +247,7 @@ function MagneticButton({ children, className = "" }: { children: React.ReactNod
       animate={{ x: position.x, y: position.y }}
       transition={{ type: "spring", stiffness: 150, damping: 15 }}
     >
-      <span className="relative z-10 flex items-center justify-center gap-3">
-        {children}
-      </span>
+      <span className="relative z-10 flex items-center justify-center gap-3">{children}</span>
       <motion.div
         className="absolute inset-0 bg-foreground"
         initial={{ x: "-100%" }}
@@ -370,7 +279,8 @@ export default function LunaXPage() {
   const features = [
     {
       title: "Vulnerability Scanner",
-      description: "AI-powered deep scanning for security vulnerabilities. Real-time threat detection with zero false positives.",
+      description:
+        "AI-powered deep scanning for security vulnerabilities. Real-time threat detection with zero false positives.",
     },
     {
       title: "Penetration Testing",
@@ -391,9 +301,8 @@ export default function LunaXPage() {
   return (
     <>
       {showIntro && <IntroAnimation onComplete={() => setShowIntro(false)} />}
-      
-      <div ref={containerRef} className="relative min-h-[500vh] bg-background">
 
+      <div ref={containerRef} className="relative min-h-[500vh] bg-background">
         {/* Progress Bar */}
         <motion.div
           className="fixed top-0 left-0 right-0 h-[2px] bg-foreground origin-left z-40"
@@ -402,10 +311,23 @@ export default function LunaXPage() {
 
         {/* Hero Section */}
         <motion.section
-          className="fixed inset-0 flex flex-col items-center justify-center px-6 z-10"
+          className="fixed inset-0 flex flex-col items-center justify-center px-6 z-10 overflow-hidden"
           style={{ opacity: heroOpacity, scale: heroScale, y: heroY }}
         >
-          <HeroBackground />
+          {/* Video background (public/aa.mp4) */}
+          <video
+            className="absolute inset-0 w-full h-full object-cover"
+            src="/aa.mp4"
+            autoPlay
+            muted
+            loop
+            playsInline
+            preload="auto"
+          />
+
+          {/* Readability overlay */}
+          <div className="absolute inset-0 bg-background/50" />
+
           {isLoaded && (
             <>
               <motion.p
@@ -445,9 +367,7 @@ export default function LunaXPage() {
               >
                 <Link href="/ai">
                   <MagneticButton className="px-8 py-4 border border-foreground text-foreground group-hover:text-background transition-colors text-lg font-medium">
-                    <span className="group-hover:text-background transition-colors duration-300">
-                    Launch Beta
-                    </span>
+                    <span className="group-hover:text-background transition-colors duration-300">Launch Beta</span>
                     <svg
                       className="w-5 h-5 group-hover:text-background transition-colors duration-300"
                       fill="none"
@@ -502,9 +422,7 @@ export default function LunaXPage() {
                   <div className="text-5xl md:text-7xl font-bold mb-2">
                     <AnimatedCounter target={stat.value} suffix={stat.suffix} />
                   </div>
-                  <p className="text-muted-foreground font-mono text-sm tracking-wider">
-                    {stat.label}
-                  </p>
+                  <p className="text-muted-foreground font-mono text-sm tracking-wider">{stat.label}</p>
                 </motion.div>
               ))}
             </div>
@@ -525,11 +443,7 @@ export default function LunaXPage() {
               </h2>
             </motion.div>
 
-            <div className="space-y-6">
-              {features.map((feature, i) => (
-                <FeatureCard key={i} {...feature} index={i} />
-              ))}
-            </div>
+            <div className="space-y-6">{features.map((feature, i) => <FeatureCard key={i} {...feature} index={i} />)}</div>
           </div>
         </section>
 
@@ -555,12 +469,7 @@ export default function LunaXPage() {
               <Link href="/early-access">
                 <MagneticButton className="px-12 py-5 bg-foreground text-background text-lg font-medium">
                   <span>Get Early Access</span>
-                  <svg
-                    className="w-5 h-5"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path
                       strokeLinecap="round"
                       strokeLinejoin="round"
@@ -590,9 +499,7 @@ export default function LunaXPage() {
             <div className="font-bold text-2xl tracking-tighter">
               LUNA<span className="text-muted-foreground">X</span>
             </div>
-            <p className="text-sm text-muted-foreground font-mono">
-              2026 Luna X. All systems protected.
-            </p>
+            <p className="text-sm text-muted-foreground font-mono">2026 Luna X. All systems protected.</p>
           </div>
         </footer>
       </div>
