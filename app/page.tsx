@@ -294,9 +294,8 @@ export default function LunaXPage() {
   return (
     <>
       {showIntro && <IntroAnimation onComplete={() => setShowIntro(false)} />}
-      
-      <div ref={containerRef} className="relative min-h-[500vh] bg-background">
 
+      <div ref={containerRef} className="relative min-h-[500vh] bg-background">
         {/* Progress Bar */}
         <motion.div
           className="fixed top-0 left-0 right-0 h-[2px] bg-foreground origin-left z-40"
@@ -305,10 +304,23 @@ export default function LunaXPage() {
 
         {/* Hero Section */}
         <motion.section
-          className="fixed inset-0 flex flex-col items-center justify-center px-6 z-10"
+          className="fixed inset-0 flex flex-col items-center justify-center px-6 z-10 overflow-hidden"
           style={{ opacity: heroOpacity, scale: heroScale, y: heroY }}
         >
-          <HeroBackground />
+          {/* Video background (public/aa.mp4) */}
+          <video
+            className="absolute inset-0 w-full h-full object-cover"
+            src="/aa.mp4"
+            autoPlay
+            muted
+            loop
+            playsInline
+            preload="auto"
+          />
+
+          {/* Readability overlay */}
+          <div className="absolute inset-0 bg-background/50" />
+
           {isLoaded && (
             <>
               <motion.p
@@ -346,11 +358,9 @@ export default function LunaXPage() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.8 }}
               >
-                <Link href="/scan">
+                <Link href="/ai">
                   <MagneticButton className="px-8 py-4 border border-foreground text-foreground group-hover:text-background transition-colors text-lg font-medium">
-                    <span className="group-hover:text-background transition-colors duration-300">
-                      Start Scanning
-                    </span>
+                    <span className="group-hover:text-background transition-colors duration-300">Launch Beta</span>
                     <svg
                       className="w-5 h-5 group-hover:text-background transition-colors duration-300"
                       fill="none"
@@ -367,7 +377,6 @@ export default function LunaXPage() {
                   </MagneticButton>
                 </Link>
               </motion.div>
-
               {/* Scroll Indicator */}
               <motion.div
                 className="absolute bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
