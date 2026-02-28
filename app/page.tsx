@@ -332,7 +332,7 @@ export default function LunaXPage() {
                 className="font-mono text-sm text-muted-foreground mb-8 tracking-widest"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.2, duration: 0.8 }}
+                transition={{ delay: 0.2 }}
               >
                 ETHICAL HACKER AI
               </motion.p>
@@ -352,7 +352,7 @@ export default function LunaXPage() {
                 className="text-lg md:text-xl text-muted-foreground mt-8 max-w-md text-center"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.6,duration: 0.8 }}
+                transition={{ delay: 0.6 }}
               >
                 The future of security testing. Powered by artificial intelligence.
               </motion.p>
