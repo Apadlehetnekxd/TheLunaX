@@ -8,16 +8,16 @@ import Link from "next/link"
 // Glitch Text Component
 function GlitchText({ text, className = "" }: { text: string; className?: string }) {
   return (
-    <div className={`relative inline-block ${className}`}> 
+    <div className={`relative inline-block ${className}`}>
       <span className="relative z-10">{text}</span>
-      <span
+      <span 
         className="absolute inset-0 text-foreground opacity-80 animate-glitch-1"
         style={{ clipPath: "polygon(0 0, 100% 0, 100% 45%, 0 45%)" }}
         aria-hidden
       >
         {text}
       </span>
-      <span
+      <span 
         className="absolute inset-0 text-foreground opacity-80 animate-glitch-2"
         style={{ clipPath: "polygon(0 55%, 100% 55%, 100% 100%, 0 100%)" }}
         aria-hidden
@@ -27,6 +27,8 @@ function GlitchText({ text, className = "" }: { text: string; className?: string
     </div>
   )
 }
+
+// Video Background for Hero
 function HeroBackground() {
   const videoRef = useRef<HTMLVideoElement>(null)
 
@@ -48,9 +50,10 @@ function HeroBackground() {
         playsInline
         preload="auto"
         className="absolute inset-0 w-full h-full object-cover"
-        src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/aa-ixzJ2M73q9kc7i8WFgxZrCws7PrcqE.mp4"
+        src="/aa.mp4"
       />
-      
+      {/* Dark overlay so text remains readable */}
+      <div className="absolute inset-0 bg-background/50" />
     </div>
   )
 }
@@ -84,10 +87,10 @@ function IntroAnimation({ onComplete }: { onComplete: () => void }) {
 
       {/* Glitch Bars */}
       {phase >= 1 && (
-        <> 
+        <>
           {[...Array(5)].map((_, i) => (
-            <motion.div 
-              key={i} 
+            <motion.div
+              key={i}
               className="absolute h-[2px] bg-foreground"
               initial={{ width: 0, left: "50%" }}
               animate={{
@@ -115,19 +118,15 @@ function IntroAnimation({ onComplete }: { onComplete: () => void }) {
         >
           <motion.h1
             className="text-7xl md:text-[12rem] font-bold tracking-tighter"
-            animate={
-              phase >= 3 
-                ? {
-                    x: [0, -5, 5, -3, 3, 0],
-                    textShadow: [
-                      "0 0 0 transparent",
-                      "-5px 0 0 rgba(255,255,255,0.8), 5px 0 0 rgba(100,100,100,0.8)",
-                      "5px 0 0 rgba(255,255,255,0.8), -5px 0 0 rgba(100,100,100,0.8)",
-                      "0 0 0 transparent",
-                    ],
-                  }
-                : {}
-            }
+            animate={phase >= 3 ? {
+              x: [0, -5, 5, -3, 3, 0],
+              textShadow: [
+                "0 0 0 transparent",
+                "-5px 0 0 rgba(255,255,255,0.8), 5px 0 0 rgba(100,100,100,0.8)",
+                "5px 0 0 rgba(255,255,255,0.8), -5px 0 0 rgba(100,100,100,0.8)",
+                "0 0 0 transparent",
+              ]
+            } : {}}
             transition={{ duration: 0.5, repeat: phase >= 3 ? 2 : 0 }}
           >
             <span className="inline-block">LUNA</span>
@@ -146,14 +145,14 @@ function IntroAnimation({ onComplete }: { onComplete: () => void }) {
 
       {/* Corner Brackets */}
       {phase >= 2 && (
-        <> 
+        <>
           <motion.div
             className="absolute top-1/4 left-1/4 w-16 h-16 border-l-2 border-t-2 border-foreground"
             initial={{ opacity: 0, scale: 0.5 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.2 }}
           />
-          <motion.div 
+          <motion.div
             className="absolute bottom-1/4 right-1/4 w-16 h-16 border-r-2 border-b-2 border-foreground"
             initial={{ opacity: 0, scale: 0.5 }}
             animate={{ opacity: 1, scale: 1 }}
@@ -166,22 +165,22 @@ function IntroAnimation({ onComplete }: { onComplete: () => void }) {
 }
 
 // Interactive Feature Card
-function FeatureCard({
-  title,
-  description,
-  index,
-}: {
+function FeatureCard({ 
+  title, 
+  description, 
+  index 
+}: { 
   title: string
   description: string
-  index: number
+  index: number 
 }) {
   const ref = useRef(null)
   const isInView = useInView(ref, { once: true, margin: "-100px" })
   const [isHovered, setIsHovered] = useState(false)
 
   return (
-    <motion.div 
-      ref={ref} 
+    <motion.div
+      ref={ref}
       className="relative group cursor-pointer"
       initial={{ opacity: 0, y: 100 }}
       animate={isInView ? { opacity: 1, y: 0 } : {}}
@@ -191,7 +190,7 @@ function FeatureCard({
     >
       <div className="relative overflow-hidden border border-border p-8 md:p-12 bg-card transition-all duration-500 group-hover:border-foreground">
         {/* Hover Fill Effect */}
-        <motion.div 
+        <motion.div
           className="absolute inset-0 bg-foreground"
           initial={{ y: "100%" }}
           animate={{ y: isHovered ? "0%" : "100%" }}
@@ -244,8 +243,7 @@ function AnimatedCounter({ target, suffix = "" }: { target: number; suffix?: str
 
   return (
     <span ref={ref} className="font-mono tabular-nums">
-      {count.toLocaleString()}
-      {suffix}
+      {count.toLocaleString()}{suffix}
     </span>
   )
 }
@@ -274,7 +272,9 @@ function MagneticButton({ children, className = "" }: { children: React.ReactNod
       animate={{ x: position.x, y: position.y }}
       transition={{ type: "spring", stiffness: 150, damping: 15 }}
     >
-      <span className="relative z-10 flex items-center justify-center gap-3">{children}</span>
+      <span className="relative z-10 flex items-center justify-center gap-3">
+        {children}
+      </span>
       <motion.div
         className="absolute inset-0 bg-foreground"
         initial={{ x: "-100%" }}
@@ -306,8 +306,7 @@ export default function LunaXPage() {
   const features = [
     {
       title: "Vulnerability Scanner",
-      description:
-        "AI-powered deep scanning for security vulnerabilities. Real-time threat detection with zero false positives.",
+      description: "AI-powered deep scanning for security vulnerabilities. Real-time threat detection with zero false positives.",
     },
     {
       title: "Penetration Testing",
@@ -328,8 +327,9 @@ export default function LunaXPage() {
   return (
     <>
       {showIntro && <IntroAnimation onComplete={() => setShowIntro(false)} />}
-
+      
       <div ref={containerRef} className="relative min-h-[500vh] bg-background">
+
         {/* Progress Bar */}
         <motion.div
           className="fixed top-0 left-0 right-0 h-[2px] bg-foreground origin-left z-40"
@@ -381,7 +381,9 @@ export default function LunaXPage() {
               >
                 <Link href="/ai">
                   <MagneticButton className="px-8 py-4 border border-foreground text-foreground group-hover:text-background transition-colors text-lg font-medium">
-                    <span className="group-hover:text-background transition-colors duration-300">Launch Beta</span>
+                    <span className="group-hover:text-background transition-colors duration-300">
+                      Launch Beta
+                    </span>
                     <svg
                       className="w-5 h-5 group-hover:text-background transition-colors duration-300"
                       fill="none"
@@ -399,21 +401,20 @@ export default function LunaXPage() {
                 </Link>
               </motion.div>
 
-              {/* Scroll Indicator */}
               <motion.div
-                className="absolute bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
+                className="mt-12"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 1.2 }}
               >
                 <span className="text-xs font-mono text-muted-foreground tracking-widest">SCROLL</span>
                 <motion.div
-                  className="w-[1px] h-12 bg-gradient-to-b from-foreground to-transparent"
+                  className="w-[1px] h-12 mx-auto mt-2 bg-gradient-to-b from-foreground to-transparent"
                   animate={{ scaleY: [1, 0.5, 1] }}
                   transition={{ duration: 1.5, repeat: Infinity }}
                 />
               </motion.div>
-            </>
+            </div>
           )}
         </motion.section>
 
@@ -436,7 +437,9 @@ export default function LunaXPage() {
                   <div className="text-5xl md:text-7xl font-bold mb-2">
                     <AnimatedCounter target={stat.value} suffix={stat.suffix} />
                   </div>
-                  <p className="text-muted-foreground font-mono text-sm tracking-wider">{stat.label}</p>
+                  <p className="text-muted-foreground font-mono text-sm tracking-wider">
+                    {stat.label}
+                  </p>
                 </motion.div>
               ))}
             </div>
@@ -457,7 +460,11 @@ export default function LunaXPage() {
               </h2>
             </motion.div>
 
-            <div className="space-y-6">{features.map((feature, i) => <FeatureCard key={i} {...feature} index={i} />)}</div>
+            <div className="space-y-6">
+              {features.map((feature, i) => (
+                <FeatureCard key={i} {...feature} index={i} />
+              ))}
+            </div>
           </div>
         </section>
 
@@ -483,7 +490,12 @@ export default function LunaXPage() {
               <Link href="/early-access">
                 <MagneticButton className="px-12 py-5 bg-foreground text-background text-lg font-medium">
                   <span>Get Early Access</span>
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg
+                    className="w-5 h-5"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
                     <path
                       strokeLinecap="round"
                       strokeLinejoin="round"
@@ -513,7 +525,9 @@ export default function LunaXPage() {
             <div className="font-bold text-2xl tracking-tighter">
               LUNA<span className="text-muted-foreground">X</span>
             </div>
-            <p className="text-sm text-muted-foreground font-mono">2026 Luna X. All systems protected.</p>
+            <p className="text-sm text-muted-foreground font-mono">
+              2026 Luna X. All systems protected.
+            </p>
           </div>
         </footer>
       </div>
