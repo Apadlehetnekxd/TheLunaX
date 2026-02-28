@@ -8,7 +8,7 @@ import Link from "next/link"
 // Glitch Text Component
 function GlitchText({ text, className = "" }: { text: string; className?: string }) {
   return (
-    <div className={`relative inline-block ${className}`}>  
+    <div className={`relative inline-block ${className}`}> 
       <span className="relative z-10">{text}</span>
       <span
         className="absolute inset-0 text-foreground opacity-80 animate-glitch-1"
@@ -57,10 +57,10 @@ function IntroAnimation({ onComplete }: { onComplete: () => void }) {
 
       {/* Glitch Bars */}
       {phase >= 1 && (
-        <>  
+        <> 
           {[...Array(5)].map((_, i) => (
-            <motion.div
-              key={i}
+            <motion.div 
+              key={i} 
               className="absolute h-[2px] bg-foreground"
               initial={{ width: 0, left: "50%" }}
               animate={{
@@ -89,7 +89,7 @@ function IntroAnimation({ onComplete }: { onComplete: () => void }) {
           <motion.h1
             className="text-7xl md:text-[12rem] font-bold tracking-tighter"
             animate={
-              phase >= 3
+              phase >= 3 
                 ? {
                     x: [0, -5, 5, -3, 3, 0],
                     textShadow: [
@@ -119,14 +119,14 @@ function IntroAnimation({ onComplete }: { onComplete: () => void }) {
 
       {/* Corner Brackets */}
       {phase >= 2 && (
-        <>  
+        <> 
           <motion.div
             className="absolute top-1/4 left-1/4 w-16 h-16 border-l-2 border-t-2 border-foreground"
             initial={{ opacity: 0, scale: 0.5 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.2 }}
           />
-          <motion.div
+          <motion.div 
             className="absolute bottom-1/4 right-1/4 w-16 h-16 border-r-2 border-b-2 border-foreground"
             initial={{ opacity: 0, scale: 0.5 }}
             animate={{ opacity: 1, scale: 1 }}
@@ -153,8 +153,8 @@ function FeatureCard({
   const [isHovered, setIsHovered] = useState(false)
 
   return (
-    <motion.div
-      ref={ref}
+    <motion.div 
+      ref={ref} 
       className="relative group cursor-pointer"
       initial={{ opacity: 0, y: 100 }}
       animate={isInView ? { opacity: 1, y: 0 } : {}}
@@ -164,7 +164,7 @@ function FeatureCard({
     >
       <div className="relative overflow-hidden border border-border p-8 md:p-12 bg-card transition-all duration-500 group-hover:border-foreground">
         {/* Hover Fill Effect */}
-        <motion.div
+        <motion.div 
           className="absolute inset-0 bg-foreground"
           initial={{ y: "100%" }}
           animate={{ y: isHovered ? "0%" : "100%" }}
@@ -261,6 +261,7 @@ function MagneticButton({ children, className = "" }: { children: React.ReactNod
 // Main Page
 export default function LunaXPage() {
   const [showIntro, setShowIntro] = useState(true)
+  const [isLoaded, setIsLoaded] = useState(false)
   const containerRef = useRef(null)
   const { scrollYProgress } = useScroll({ target: containerRef })
   const smoothProgress = useSpring(scrollYProgress, { stiffness: 100, damping: 30 })
@@ -268,6 +269,12 @@ export default function LunaXPage() {
   const heroOpacity = useTransform(smoothProgress, [0, 0.15], [1, 0])
   const heroScale = useTransform(smoothProgress, [0, 0.15], [1, 0.8])
   const heroY = useTransform(smoothProgress, [0, 0.15], [0, -100])
+
+  useEffect(() => {
+    if (!showIntro) {
+      setTimeout(() => setIsLoaded(true), 100)
+    }
+  }, [showIntro])
 
   const features = [
     {
@@ -377,6 +384,7 @@ export default function LunaXPage() {
                   </MagneticButton>
                 </Link>
               </motion.div>
+
               {/* Scroll Indicator */}
               <motion.div
                 className="absolute bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
