@@ -319,8 +319,7 @@ export default function LunaXPage() {
             preload="auto"
           />
 
-          {/* Dark Overlay for visibility */}
-          <div className="absolute inset-0 bg-black/60 z-0" />
+          
 
           {/* TEXT CONTENT (FIXED Z-INDEX) */}
           <div className="relative z-10 flex flex-col items-center text-center">
