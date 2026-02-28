@@ -381,7 +381,7 @@ export default function LunaXPage() {
                 </Link>
               </motion.div>
 
-              {/* Scroll Indicator */}
+        {/* Scroll Indicator */}
               <motion.div
                 className="absolute bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
                 initial={{ opacity: 0 }}
@@ -395,9 +395,9 @@ export default function LunaXPage() {
                   transition={{ duration: 1.5, repeat: Infinity }}
                 />
               </motion.div>
+            </>
           )}
         </motion.section>
-
         {/* Spacer for scroll */}
         <div className="h-screen" />
 
