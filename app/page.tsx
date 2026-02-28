@@ -27,6 +27,33 @@ function GlitchText({ text, className = "" }: { text: string; className?: string
     </div>
   )
 }
+function HeroBackground() {
+  const videoRef = useRef<HTMLVideoElement>(null)
+
+  useEffect(() => {
+    if (videoRef.current) {
+      videoRef.current.play().catch(() => {
+        // Autoplay may be blocked, that's ok
+      })
+    }
+  }, [])
+
+  return (
+    <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
+      <video
+        ref={videoRef}
+        autoPlay
+        loop
+        muted
+        playsInline
+        preload="auto"
+        className="absolute inset-0 w-full h-full object-cover"
+        src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/aa-ixzJ2M73q9kc7i8WFgxZrCws7PrcqE.mp4"
+      />
+      
+    </div>
+  )
+}
 
 // Intro Animation
 function IntroAnimation({ onComplete }: { onComplete: () => void }) {
@@ -311,50 +338,47 @@ export default function LunaXPage() {
 
         {/* Hero Section */}
         <motion.section
-          className="fixed inset-0 flex flex-col items-center justify-center px-6 z-10 overflow-hidden"
+          className="fixed inset-0 flex flex-col items-center justify-center px-6 z-10"
           style={{ opacity: heroOpacity, scale: heroScale, y: heroY }}
         >
-      <video
-        className="absolute inset-0 w-full h-full object-cover z-0"
-        src="/aa.mp4"
-        autoPlay
-        muted
-        loop
-        playsInline
-        preload="auto"
-      />
+          <HeroBackground />
+          {isLoaded && (
+            <div className="relative z-10 flex flex-col items-center justify-center">
+              <motion.p
+                className="font-mono text-sm text-muted-foreground mb-8 tracking-widest"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.2 }}
+              >
+                ETHICAL HACKER AI
+              </motion.p>
 
-      {/* Szövegek */}
-      {isLoaded && (
-        <div className="relative z-10 flex flex-col items-center">
-          <motion.p
-            className="font-mono text-sm text-muted-foreground mb-8 tracking-widest"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2, duration: 0.8 }}
-          >
-            ETHICAL HACKER AI
-          </motion.p>
+              <motion.div
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ delay: 0.4, duration: 0.8 }}
+              >
+                <GlitchText
+                  text="LUNA X"
+                  className="text-6xl md:text-[10rem] font-bold tracking-tighter leading-none"
+                />
+              </motion.div>
 
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 0.4, duration: 0.8 }}
-          >
-            <GlitchText
-              text="LUNA X"
-              className="text-6xl md:text-[10rem] font-bold tracking-tighter leading-none opacity-100"
-            />
-          </motion.div>
+              <motion.p
+                className="text-lg md:text-xl text-muted-foreground mt-8 max-w-md text-center"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.6 }}
+              >
+                The future of security testing. Powered by artificial intelligence.
+              </motion.p>
 
-          <motion.p
-            className="text-lg md:text-xl text-muted-foreground mt-8 max-w-md text-center"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.6, duration: 0.8 }}
-          >
-            The future of security testing. Powered by artificial intelligence.
-          </motion.p>
+              <motion.div
+                className="mt-12"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.8 }}
+              >
                 <Link href="/ai">
                   <MagneticButton className="px-8 py-4 border border-foreground text-foreground group-hover:text-background transition-colors text-lg font-medium">
                     <span className="group-hover:text-background transition-colors duration-300">Launch Beta</span>
