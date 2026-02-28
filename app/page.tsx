@@ -314,17 +314,16 @@ export default function LunaXPage() {
           className="fixed inset-0 flex flex-col items-center justify-center px-6 z-10 overflow-hidden"
           style={{ opacity: heroOpacity, scale: heroScale, y: heroY }}
         >
-          {/* Video background (public/aa.mp4) */}
-          <video
-            className="absolute inset-0 w-full h-full object-cover"
-            src="/aa.mp4"
-            autoPlay
-            muted
-            loop
-            playsInline
-            preload="auto"
-          />
-
+        <video
+        className="absolute inset-0 w-full h-full object-cover z-0"
+        src="/aa.mp4"
+        autoPlay
+        muted
+        loop
+        playsInline
+        preload="auto"
+        />
+ 
           
 
           {isLoaded && (
