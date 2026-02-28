@@ -28,32 +28,95 @@ function GlitchText({ text, className = "" }: { text: string; className?: string
   )
 }
 
-// Video Background for Hero
+// Hero Background Animation - Animated rings and glow effect
 function HeroBackground() {
-  const videoRef = useRef<HTMLVideoElement>(null)
-
-  useEffect(() => {
-    if (videoRef.current) {
-      videoRef.current.play().catch(() => {
-        // Autoplay may be blocked, that's ok
-      })
-    }
-  }, [])
-
   return (
-    <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
-      <video
-        ref={videoRef}
-        autoPlay
-        loop
-        muted
-        playsInline
-        preload="auto"
-        className="absolute inset-0 w-full h-full object-cover"
-        src="/aa.mp4"
+    <div className="absolute inset-0 overflow-hidden pointer-events-none">
+      {/* Central glow */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] md:w-[800px] md:h-[800px]">
+        {/* Pulsing core glow */}
+        <motion.div
+          className="absolute inset-0 rounded-full bg-white/5 blur-[100px]"
+          animate={{
+            scale: [1, 1.2, 1],
+            opacity: [0.3, 0.5, 0.3],
+          }}
+          transition={{
+            duration: 4,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
+        />
+        
+        {/* Rotating rings */}
+        {[...Array(4)].map((_, i) => (
+          <motion.div
+            key={i}
+            className="absolute inset-0 border border-white/10 rounded-full"
+            style={{
+              inset: `${i * 60}px`,
+            }}
+            animate={{
+              rotate: i % 2 === 0 ? 360 : -360,
+              scale: [1, 1.02, 1],
+            }}
+            transition={{
+              rotate: {
+                duration: 20 + i * 5,
+                repeat: Infinity,
+                ease: "linear",
+              },
+              scale: {
+                duration: 3 + i,
+                repeat: Infinity,
+                ease: "easeInOut",
+              },
+            }}
+          />
+        ))}
+
+        {/* Floating particles */}
+        {[...Array(12)].map((_, i) => (
+          <motion.div
+            key={`particle-${i}`}
+            className="absolute w-1 h-1 bg-white/30 rounded-full"
+            style={{
+              top: `${20 + Math.random() * 60}%`,
+              left: `${20 + Math.random() * 60}%`,
+            }}
+            animate={{
+              y: [0, -20, 0],
+              x: [0, Math.random() * 10 - 5, 0],
+              opacity: [0.2, 0.6, 0.2],
+            }}
+            transition={{
+              duration: 3 + Math.random() * 2,
+              repeat: Infinity,
+              delay: i * 0.3,
+              ease: "easeInOut",
+            }}
+          />
+        ))}
+      </div>
+
+      {/* Corner accents */}
+      <div className="absolute top-0 left-0 w-32 h-32 border-l border-t border-white/5" />
+      <div className="absolute top-0 right-0 w-32 h-32 border-r border-t border-white/5" />
+      <div className="absolute bottom-0 left-0 w-32 h-32 border-l border-b border-white/5" />
+      <div className="absolute bottom-0 right-0 w-32 h-32 border-r border-b border-white/5" />
+
+      {/* Scan line effect */}
+      <motion.div
+        className="absolute left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-white/20 to-transparent"
+        animate={{
+          top: ["0%", "100%"],
+        }}
+        transition={{
+          duration: 8,
+          repeat: Infinity,
+          ease: "linear",
+        }}
       />
-      {/* Dark overlay so text remains readable */}
-      <div className="absolute inset-0 bg-background/50" />
     </div>
   )
 }
@@ -343,7 +406,7 @@ export default function LunaXPage() {
         >
           <HeroBackground />
           {isLoaded && (
-            <div className="relative z-10 flex flex-col items-center justify-center">
+            <>
               <motion.p
                 className="font-mono text-sm text-muted-foreground mb-8 tracking-widest"
                 initial={{ opacity: 0, y: 20 }}
@@ -382,7 +445,7 @@ export default function LunaXPage() {
                 <Link href="/ai">
                   <MagneticButton className="px-8 py-4 border border-foreground text-foreground group-hover:text-background transition-colors text-lg font-medium">
                     <span className="group-hover:text-background transition-colors duration-300">
-                      Launch Beta
+                    Launch Beta
                     </span>
                     <svg
                       className="w-5 h-5 group-hover:text-background transition-colors duration-300"
@@ -401,20 +464,21 @@ export default function LunaXPage() {
                 </Link>
               </motion.div>
 
+              {/* Scroll Indicator */}
               <motion.div
-                className="mt-12"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
+                className="absolute bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
                 transition={{ delay: 1.2 }}
               >
                 <span className="text-xs font-mono text-muted-foreground tracking-widest">SCROLL</span>
                 <motion.div
-                  className="w-[1px] h-12 mx-auto mt-2 bg-gradient-to-b from-foreground to-transparent"
+                  className="w-[1px] h-12 bg-gradient-to-b from-foreground to-transparent"
                   animate={{ scaleY: [1, 0.5, 1] }}
                   transition={{ duration: 1.5, repeat: Infinity }}
                 />
               </motion.div>
-            </div>
+            </>
           )}
         </motion.section>
 
