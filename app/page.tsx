@@ -414,9 +414,7 @@ export default function LunaXPage() {
                   <div className="text-5xl md:text-7xl font-bold mb-2">
                     <AnimatedCounter target={stat.value} suffix={stat.suffix} />
                   </div>
-                  <p className="text-muted-foreground font-mono text-sm tracking-wider">
-                    {stat.label}
-                  </p>
+                  <p className="text-muted-foreground font-mono text-sm tracking-wider">{stat.label}</p>
                 </motion.div>
               ))}
             </div>
@@ -437,11 +435,7 @@ export default function LunaXPage() {
               </h2>
             </motion.div>
 
-            <div className="space-y-6">
-              {features.map((feature, i) => (
-                <FeatureCard key={i} {...feature} index={i} />
-              ))}
-            </div>
+            <div className="space-y-6">{features.map((feature, i) => <FeatureCard key={i} {...feature} index={i} />)}</div>
           </div>
         </section>
 
@@ -467,12 +461,7 @@ export default function LunaXPage() {
               <Link href="/early-access">
                 <MagneticButton className="px-12 py-5 bg-foreground text-background text-lg font-medium">
                   <span>Get Early Access</span>
-                  <svg
-                    className="w-5 h-5"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path
                       strokeLinecap="round"
                       strokeLinejoin="round"
@@ -502,9 +491,7 @@ export default function LunaXPage() {
             <div className="font-bold text-2xl tracking-tighter">
               LUNA<span className="text-muted-foreground">X</span>
             </div>
-            <p className="text-sm text-muted-foreground font-mono">
-              2026 Luna X. All systems protected.
-            </p>
+            <p className="text-sm text-muted-foreground font-mono">2026 Luna X. All systems protected.</p>
           </div>
         </footer>
       </div>
