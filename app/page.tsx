@@ -325,8 +325,7 @@ export default function LunaXPage() {
             preload="auto"
           />
 
-          {/* Readability overlay */}
-          <div className="absolute inset-0 bg-background/50" />
+          
 
           {isLoaded && (
             <>
