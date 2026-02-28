@@ -395,7 +395,6 @@ export default function LunaXPage() {
                   transition={{ duration: 1.5, repeat: Infinity }}
                 />
               </motion.div>
-            </>
           )}
         </motion.section>
 
