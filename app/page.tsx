@@ -359,43 +359,44 @@ export default function LunaXPage() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.8 }}
             >
-              <Link href="/ai">
-                <MagneticButton className="px-8 py-4 border border-foreground text-foreground text-lg font-medium">
-                  <span>Launch Beta</span>
-                  <svg
-                    className="w-5 h-5"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M17 8l4 4m0 0l-4 4m4-4H3"
-                    />
-                  </svg>
-                </MagneticButton>
-              </Link>
-            </motion.div>
+                <Link href="/ai">
+                  <MagneticButton className="px-8 py-4 border border-foreground text-foreground group-hover:text-background transition-colors text-lg font-medium">
+                    <span className="group-hover:text-background transition-colors duration-300">
+                    Launch Beta
+                    </span>
+                    <svg
+                      className="w-5 h-5 group-hover:text-background transition-colors duration-300"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M17 8l4 4m0 0l-4 4m4-4H3"
+                      />
+                    </svg>
+                  </MagneticButton>
+                </Link>
+              </motion.div>
 
-            {/* Scroll Indicator */}
-            <motion.div
-              className="absolute bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 1.2 }}
-            >
-              <span className="text-xs font-mono text-muted-foreground tracking-widest">
-                SCROLL
-              </span>
+              {/* Scroll Indicator */}
               <motion.div
-                className="w-[1px] h-12 bg-gradient-to-b from-foreground to-transparent"
-                animate={{ scaleY: [1, 0.5, 1] }}
-                transition={{ duration: 1.5, repeat: Infinity }}
-              />
-            </motion.div>
-          </div>
+                className="absolute bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 1.2 }}
+              >
+                <span className="text-xs font-mono text-muted-foreground tracking-widest">SCROLL</span>
+                <motion.div
+                  className="w-[1px] h-12 bg-gradient-to-b from-foreground to-transparent"
+                  animate={{ scaleY: [1, 0.5, 1] }}
+                  transition={{ duration: 1.5, repeat: Infinity }}
+                />
+              </motion.div>
+            </>
+          )}
         </motion.section>
 
         {/* Spacer for scroll */}
@@ -417,7 +418,9 @@ export default function LunaXPage() {
                   <div className="text-5xl md:text-7xl font-bold mb-2">
                     <AnimatedCounter target={stat.value} suffix={stat.suffix} />
                   </div>
-                  <p className="text-muted-foreground font-mono text-sm tracking-wider">{stat.label}</p>
+                  <p className="text-muted-foreground font-mono text-sm tracking-wider">
+                    {stat.label}
+                  </p>
                 </motion.div>
               ))}
             </div>
@@ -438,7 +441,11 @@ export default function LunaXPage() {
               </h2>
             </motion.div>
 
-            <div className="space-y-6">{features.map((feature, i) => <FeatureCard key={i} {...feature} index={i} />)}</div>
+            <div className="space-y-6">
+              {features.map((feature, i) => (
+                <FeatureCard key={i} {...feature} index={i} />
+              ))}
+            </div>
           </div>
         </section>
 
