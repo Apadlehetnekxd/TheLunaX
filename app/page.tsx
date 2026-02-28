@@ -309,7 +309,7 @@ export default function LunaXPage() {
         >
           {/* Video background (public/aa.mp4) */}
           <video
-            className="absolute inset-0 w-full h-full object-cover"
+            className="absolute inset-0 w-full h-full object-cover z-0"
             src="/aa.mp4"
             autoPlay
             muted
