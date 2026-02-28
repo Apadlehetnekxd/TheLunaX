@@ -269,6 +269,10 @@ export default function LunaXPage() {
   const heroScale = useTransform(smoothProgress, [0, 0.15], [1, 0.8])
   const heroY = useTransform(smoothProgress, [0, 0.15], [0, -100])
 
+  const effectiveHeroOpacity = showIntro ? 1 : heroOpacity
+  const effectiveHeroScale = showIntro ? 1 : heroScale
+  const effectiveHeroY = showIntro ? 0 : heroY
+
   const features = [
     {
       title: "Vulnerability Scanner",
@@ -305,7 +309,7 @@ export default function LunaXPage() {
         {/* Hero Section */}
         <motion.section
           className="fixed inset-0 flex flex-col items-center justify-center px-6 z-10 overflow-hidden"
-          style={{ opacity: heroOpacity, scale: heroScale, y: heroY }}
+          style={{ opacity: effectiveHeroOpacity, scale: effectiveHeroScale, y: effectiveHeroY }}
         >
           {/* Video background (public/aa.mp4) */}
           <video
