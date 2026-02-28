@@ -291,10 +291,10 @@ export default function LunaXPage() {
     { value: 24, suffix: "/7", label: "Monitoring" },
   ]
 
-   return (
+  return (
     <>
       {showIntro && <IntroAnimation onComplete={() => setShowIntro(false)} />}
-
+      
       <div ref={containerRef} className="relative min-h-[500vh] bg-background">
 
         {/* Progress Bar */}
@@ -303,66 +303,53 @@ export default function LunaXPage() {
           style={{ scaleX: smoothProgress }}
         />
 
-        {/* HERO SECTION */}
+        {/* Hero Section */}
         <motion.section
-          className="fixed inset-0 flex flex-col items-center justify-center px-6 z-10 overflow-hidden"
+          className="fixed inset-0 flex flex-col items-center justify-center px-6 z-10"
           style={{ opacity: heroOpacity, scale: heroScale, y: heroY }}
         >
-          {/* Background Video */}
-          <video
-            className="absolute inset-0 w-full h-full object-cover z-0"
-            src="/aa.mp4"
-            autoPlay
-            muted
-            loop
-            playsInline
-            preload="auto"
-          />
+          <HeroBackground />
+          {isLoaded && (
+            <>
+              <motion.p
+                className="font-mono text-sm text-muted-foreground mb-8 tracking-widest"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.2 }}
+              >
+                ETHICAL HACKER AI
+              </motion.p>
 
-          
+              <motion.div
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ delay: 0.4, duration: 0.8 }}
+              >
+                <GlitchText
+                  text="LUNA X"
+                  className="text-6xl md:text-[10rem] font-bold tracking-tighter leading-none"
+                />
+              </motion.div>
 
-          {/* TEXT CONTENT (FIXED Z-INDEX) */}
-          <div className="relative z-10 flex flex-col items-center text-center">
+              <motion.p
+                className="text-lg md:text-xl text-muted-foreground mt-8 max-w-md text-center"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.6 }}
+              >
+                The future of security testing. Powered by artificial intelligence.
+              </motion.p>
 
-            <motion.p
-              className="font-mono text-sm text-muted-foreground mb-8 tracking-widest"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2 }}
-            >
-              ETHICAL HACKER AI
-            </motion.p>
-
-            <motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: 0.4, duration: 0.8 }}
-            >
-              <GlitchText
-                text="LUNA X"
-                className="text-6xl md:text-[10rem] font-bold tracking-tighter leading-none"
-              />
-            </motion.div>
-
-            <motion.p
-              className="text-lg md:text-xl text-muted-foreground mt-8 max-w-md"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.6 }}
-            >
-              The future of security testing. Powered by artificial intelligence.
-            </motion.p>
-
-            <motion.div
-              className="mt-14"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.8 }}
-            >
-                <Link href="/ai">
+              <motion.div
+                className="mt-12"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.8 }}
+              >
+                <Link href="/scan">
                   <MagneticButton className="px-8 py-4 border border-foreground text-foreground group-hover:text-background transition-colors text-lg font-medium">
                     <span className="group-hover:text-background transition-colors duration-300">
-                    Launch Beta
+                      Start Scanning
                     </span>
                     <svg
                       className="w-5 h-5 group-hover:text-background transition-colors duration-300"
@@ -381,7 +368,7 @@ export default function LunaXPage() {
                 </Link>
               </motion.div>
 
-        {/* Scroll Indicator */}
+              {/* Scroll Indicator */}
               <motion.div
                 className="absolute bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
                 initial={{ opacity: 0 }}
@@ -398,6 +385,7 @@ export default function LunaXPage() {
             </>
           )}
         </motion.section>
+
         {/* Spacer for scroll */}
         <div className="h-screen" />
 
@@ -470,8 +458,18 @@ export default function LunaXPage() {
               <Link href="/early-access">
                 <MagneticButton className="px-12 py-5 bg-foreground text-background text-lg font-medium">
                   <span>Get Early Access</span>
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                  <svg
+                    className="w-5 h-5"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M13 7l5 5m0 0l-5 5m5-5H6"
+                    />
                   </svg>
                 </MagneticButton>
               </Link>
@@ -495,7 +493,9 @@ export default function LunaXPage() {
             <div className="font-bold text-2xl tracking-tighter">
               LUNA<span className="text-muted-foreground">X</span>
             </div>
-            <p className="text-sm text-muted-foreground font-mono">2026 Luna X. All systems protected.</p>
+            <p className="text-sm text-muted-foreground font-mono">
+              2026 Luna X. All systems protected.
+            </p>
           </div>
         </footer>
       </div>
